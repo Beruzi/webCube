@@ -63,7 +63,7 @@ function draw({x, y, z}) {
 // -----------------------------------------------
 // Animation
 // -----------------------------------------------
-const FPS = 10
+const FPS = 60
 function frame(points) {
     clear();
     points.forEach(p => draw(p));
@@ -73,7 +73,7 @@ function frame(points) {
 function animate(points, transformations) {
     setInterval(() => {
         points = points.map(p => // map the following func over each point
-            transformations.reduce((acc, f) => f(acc), p) // reduce the [] of transformation by reducing (applying them onto the point, p.
+            transformations.reduce((acc, f) => f(acc), p) // reduce the [] of transformation by applying each transformation onto the point, p.
         );
         frame(points);
     }, 1000/FPS)
@@ -118,6 +118,15 @@ let cube = [
 animate(cube, [rotateY(0.1), translate(0, 0, 0.1)]);
 
 
+
+// TODO: 
+// Right now after each transformation, the newly transofmred points are resaved as the cube's
+// points. Thus every sequential call of a transformation is passed in a new set of points 
+// defining a cube. 
+
+// Instead we want to pass in the same points defining the cube over and over. Each 
+// transformation is then defined as a function of time such that its "effect" is mulitplied
+// by the amnount of time that has passed. 
 
 
 
